@@ -7,6 +7,7 @@ let methodOverride = require("method-override");
 
 var indexRouter = require("./routes/index");
 var catCollectorRouter = require("./routes/catCollector");
+var toyCollectorRouter = require("./routes/toyCollectors");
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/catCollectors", catCollectorRouter);
+app.use("/toyCollectors", toyCollectorRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

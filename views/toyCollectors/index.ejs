@@ -5,31 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./stylesheets/style.css" />
   </head>
   <body>
     <ul>
-      <% cat.forEach(function(c){ %>
+      <% toy.forEach(function(t){ %>
       <li>
         <form
-          action="/catCollectors/<%= c.id %>?_method=DELETE"
+          action="/toyCollectors/<%= t.id %>?_method=DELETE"
           method="POST"
           class="delete-form"
         >
           <button type="submit">X</button>
         </form>
-        <a href="/catCollectors/<%= c.id %>"> <%= c.name %> </a>
-        - <%= c.done ? 'done' : 'not done' %>
+        <a href="/toyCollectors/<%= t.id %>"> <%= t.name %> </a>
         <form
           class="update-form"
-          action="/catCollectors/<%= c.id %>/edit"
+          action="/toyCollectors/<%= t.id %>/edit"
           method="GET"
         >
-          <button type="submit">Update Cat</button>
+          <button type="submit">Update Toy</button>
         </form>
       </li>
       <% }); %>
     </ul>
-    <a href="/catCollectors/new">Add Cat</a>
+    <a href="/toyCollectors/new">Add Toy</a>
   </body>
 </html>

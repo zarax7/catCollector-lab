@@ -14,7 +14,6 @@ function getOne(id) {
 function create(catObj) {
   //uuid will give us a unique value
   catObj.id = uuidv4();
-  catObj.done = false;
   catCollection.push(catObj);
 }
 

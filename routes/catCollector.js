@@ -4,7 +4,7 @@ const catCtrl = require("../controllers/catCollectors");
 
 router.get("/", catCtrl.index);
 
-router.get("/new", catCtrl.new);
+router.get("/addCat", catCtrl.new);
 
 router.get("/:id", catCtrl.show);
 
