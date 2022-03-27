@@ -4,17 +4,65 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Todo</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <title>Document</title>
   </head>
   <body>
-    <form action="/catCollectors/<%= id %>?_method=PUT" method="POST">
-      <input
-        type="text"
-        name="name"
-        value="<%= cat.name%>"
-        placeholder="<%= cat.name %>"
-      />
-      <button type="submit">Update</button>
-    </form>
+    <header>
+      <div class="nav-wrapper">
+        <div class="nav-logo">
+          <a href="/">Cat Collectors</a>
+        </div>
+        <div class="nav-bar">
+          <a href="/toyCollectors/addToy"> Add a toy</a>
+          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/catCollectors/addCat"> Add a Cat</a>
+          <a href="/catCollectors/indexCats">View All Cats</a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <h1>Edit <%=cat.name%></h1>
+      <form
+        action="/catCollectors/showCat/<%=cat.id%>?_method=PUT "
+        method="POST"
+        autocomplete="off"
+      >
+        <table>
+          <tbody>
+            <tr>
+              <th>Name:</th>
+              <td>
+                <input type="text" name="name" placeholder="<%=cat.name%>" />
+              </td>
+            </tr>
+            <tr>
+              <th>Color:</th>
+              <td>
+                <input type="text" name="color" />
+              </td>
+            </tr>
+            <tr>
+              <th>Description:</th>
+              <td>
+                <input type="text" name="descrption" />
+              </td>
+            </tr>
+            <tr>
+              <th>Age:</th>
+              <td>
+                <input type="number" name="age" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit">Save</button>
+      </form>
+    </main>
   </body>
 </html>

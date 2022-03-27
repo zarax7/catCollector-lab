@@ -4,11 +4,70 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <a href="/catCollectors"><---- Go Back</a>
-    <h1>cats #<%= cat.id %></h1>
-    <h3><%= cat.name %></h3>
+    <header>
+      <div class="nav-wrapper">
+        <div class="nav-logo">
+          <a href="/">Cat Collectors</a>
+        </div>
+        <div class="nav-bar">
+          <a href="/toyCollectors/addToy"> Add a toy</a>
+          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/catCollectors/addCat"> Add a Cat</a>
+          <a href="/catCollectors/indexCats">View All Cats</a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <h1>Cat Details</h1>
+      <div class="row">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><%= cat.name%></span>
+            <p>Color:</p>
+            <p>Description:</p>
+            <p>Age:</p>
+          </div>
+            <a href="/catCollectors/showCat/<%=cat.id%>/editCat"> Edit</a>
+            |
+            <form
+              action="/catCollectors/showCat/<%=cat.id%>?_method=DELETE"
+              method="POST"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row_wrapper">
+       
+        <div class="wrapper">
+          <h3><%=cat.name%>'s Toys</h3>
+          <% cattoy.forEach(function(evt){%>
+          <h3><%=evt.name %></h3>
+        </div>
+      <%})%>
+        <div class="wrapper">
+          <h3>Available Toys</h3>
+          <% toy.forEach(function(t){%>
+          <div class="card">
+            <div class="card-content">
+              <span>
+                A <%=t.name%>
+              </span>
+            </div>
+            <form action="/catCollectors/showCat/<%=cat.id%>" method="POST">
+              <input type="hidden" name="toyName" value="<%=t.name%>">
+              <button type="submit">Add</button>
+            </form>
+          </div>
+          <% })%>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

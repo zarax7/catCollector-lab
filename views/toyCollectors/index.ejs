@@ -4,30 +4,35 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <ul>
+    <header>
+      <div class="nav-wrapper">
+        <div class="nav-logo">
+          <a href="/">Cat Collectors</a>
+        </div>
+        <div class="nav-bar">
+          <a href="/toyCollectors/addToy"> Add a toy</a>
+          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/catCollectors/addCat"> Add a Cat</a>
+          <a href="/catCollectors/viewCats">View All Cats</a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <h1>Toy List</h1>
       <% toy.forEach(function(t){ %>
-      <li>
-        <form
-          action="/toyCollectors/<%= t.id %>?_method=DELETE"
-          method="POST"
-          class="delete-form"
-        >
-          <button type="submit">X</button>
-        </form>
-        <a href="/toyCollectors/<%= t.id %>"> <%= t.name %> </a>
-        <form
-          class="update-form"
-          action="/toyCollectors/<%= t.id %>/edit"
-          method="GET"
-        >
-          <button type="submit">Update Toy</button>
-        </form>
-      </li>
-      <% }); %>
-    </ul>
-    <a href="/toyCollectors/new">Add Toy</a>
+      <a href="/toyCollectors/showToy/<%=t.id%>">
+        <div class="card">
+          <div class="card-content">
+            <span><%=t.name%></span>
+            <p>Color:</p>
+          </div>
+        </div>
+      </a>
+      <% })%>
+    </main>
   </body>
 </html>

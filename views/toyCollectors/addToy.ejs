@@ -4,13 +4,54 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
     <title>Document</title>
   </head>
   <body>
-    <h1>Add A New Toy</h1>
-    <form action="/toyCollectors" method="POST" autocomplete="off">
-      <input type="text" name="name" />
-      <button type="submit">Save Toy</button>
-    </form>
+    <header>
+      <div class="nav-wrapper">
+        <div class="nav-logo">
+          <a href="/">Cat Collectors</a>
+        </div>
+        <div class="nav-bar">
+          <a href="/toyCollectors/addToy"> Add a toy</a>
+          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/catCollectors/addCat"> Add a Cat</a>
+          <a href="/catCollectors/viewCats">View All Cats</a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <h1>Add Toy</h1>
+      <form
+        action="/toyCollectors/showToy/:id"
+        method="POST"
+        autocomplete="off"
+      >
+        <input type="hidden" name="toysId" />
+        <table>
+          <tbody>
+            <tr>
+              <th>Name:</th>
+              <td>
+                <input type="text" name="name" />
+              </td>
+            </tr>
+            <tr>
+              <th>Color:</th>
+              <td>
+                <input type="text" name="color" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit">Save</button>
+      </form>
+    </main>
   </body>
 </html>

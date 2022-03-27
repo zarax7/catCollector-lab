@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const catCtrl = require("../controllers/catCollectors");
-
-router.get("/", catCtrl.index);
+//localHost3000/catColletors
+router.get("/indexCats", catCtrl.index);
 
 router.get("/addCat", catCtrl.new);
 
-router.get("/:id", catCtrl.show);
+router.get("/showCat/:id", catCtrl.show);
 
-router.post("/", catCtrl.create);
+router.post("/showCat", catCtrl.create);
 
-router.delete("/:id", catCtrl.delete);
+router.post("/showCat", catCtrl.createToy);
 
-router.get("/:id/edit", catCtrl.edit);
+router.delete("/showCat/:id", catCtrl.delete);
 
-router.put("/:id", catCtrl.update);
+router.get("/showCat/:id/editCat", catCtrl.edit);
+
+router.put("/showCat/:id", catCtrl.update);
 
 module.exports = router;
