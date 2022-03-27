@@ -14,7 +14,7 @@ async function show(req, res, next) {
     const { id } = req.params;
     const { toyName } = req.body;
     const { rows } = await db.query("SELECT * FROM cats  WHERE id =$1", [id]);
-    const toys = await db.query("SELECT toys.name FROM toys");
+    const toys = await db.query("SELECT * FROM toys");
     const cattoy = await db.query("SELECT * FROM cattoy");
     res.render("catCollectors/showCat", {
       cat: rows[0],
@@ -81,20 +81,19 @@ async function edit(req, res, next) {
     next(err);
   }
 }
-async function createToy(req, res, next) {
-  try {
-    const { toyName } = req.body;
-    const { id } = req.params;
-    const { rows } = await db.query(
-      "INSERT INTO cattoy (cat_id,name) VALUES ($1,$2)",
-      [id, toyName]
-    );
-    res.redirect(`/catCollectors/showCat`);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-}
+// async function createToy(req, res, next) {
+//   try {
+//     const { toyName } = req.body;
+//     const { id } = req.params;
+//     const { rows } = await db.query("INSERT INTO cattoy (name) VALUES ($1)", [
+//       toyName,
+//     ]);
+//     res.redirect(`/catCollectors/showCat`);
+//   } catch (err) {
+//     console.log(err);
+//     next(err);
+//   }
+// }
 // join function to connect toys and cats table => when we add a cat or toy, both indexs will show the same content
 
 module.exports = {
@@ -105,5 +104,5 @@ module.exports = {
   delete: deleteCat,
   edit,
   update,
-  createToy,
+  // createToy,
 };

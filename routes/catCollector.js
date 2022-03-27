@@ -10,12 +10,11 @@ router.get("/showCat/:id", catCtrl.show);
 
 router.post("/showCat", catCtrl.create);
 
-router.post("/showCat", catCtrl.createToy);
-
 router.delete("/showCat/:id", catCtrl.delete);
 
 router.get("/showCat/:id/editCat", catCtrl.edit);
 
 router.put("/showCat/:id", catCtrl.update);
 
+// router.post("/showCat", catCtrl.createToy);
 module.exports = router;

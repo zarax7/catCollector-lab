@@ -57,11 +57,11 @@
           <div class="card">
             <div class="card-content">
               <span>
-                A <%=t.name%>
+                A <%=t.name%><%=t.id%>
               </span>
             </div>
             <form action="/catCollectors/showCat/<%=cat.id%>" method="POST">
-              <input type="hidden" name="toyName" value="<%=t.name%>">
+              <input type="text" name="toyName" value="<%=t.name%>">
               <button type="submit">Add</button>
             </form>
           </div>
