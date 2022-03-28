@@ -45,21 +45,22 @@
       </div>
       <hr>
       <div class="row_wrapper">
-       
         <div class="wrapper">
           <h3><%=cat.name%>'s Toys</h3>
-       
+          <div class="card">
+            <div class="card-content">
          <input type="text" value="there is no toy yet">
          <h3 id="toyInput"><%cattoy.name%></h3>
         </div>
-   
-        <div class="wrapper">
+        </div>
+      </div>
+        <div class="wrapper toyForm">
           <h3>Available Toys</h3>
           <% toy.forEach(function(t){%>
           <div class="card">
             <div class="card-content">
               <span>
-                A <%=t.name%><%=t.id%>
+                A <%=t.name%>
               </span>
             </div>
             <form  action="/catCollectors/showCat/<%=cat.id%>" method="POST">

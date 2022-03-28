@@ -66,13 +66,14 @@ h1 {
 }
 
 span {
-  font-size: 30px;
+  font-size: 20px;
   text-transform: uppercase;
 }
 
-.row-wrapper {
+.row_wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 150px;
 }
 
 #deleteBtn {
@@ -88,5 +89,9 @@ span {
   text-decoration: none;
   margin-left: 10px;
   color: #ffab40;
+  font-size: large;
+}
+.toyForm {
+  width: 50%;
   font-size: large;
 }
