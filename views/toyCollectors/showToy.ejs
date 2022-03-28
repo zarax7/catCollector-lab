@@ -27,15 +27,15 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title"><%= toy.name%></span>
-            <p>Color:</p>
+            <p>Color:<%=toy.color%></p>
           </div>
-            <a href="/toyCollectors/showToy/<%=toy.id%>/editToy"> Edit</a>
+          <form
+            action="/toyCollectors/showToy/<%=toy.id%>?_method=DELETE"
+            method="POST"
+          >
+            <a href="/toyCollectors/showToy/<%=toy.id%>/editToy" id="edit"> Edit</a>
             |
-            <form
-              action="/toyCollectors/showToy/<%=toy.id%>?_method=DELETE"
-              method="POST"
-            >
-              <button type="submit">Delete</button>
+              <button id="deleteBtn" type="submit">Delete</button>
             </form>
           </div>
         </div>

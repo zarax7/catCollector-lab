@@ -74,3 +74,19 @@ span {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+#deleteBtn {
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  color: #ffab40;
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+#edit {
+  text-decoration: none;
+  margin-left: 10px;
+  color: #ffab40;
+  font-size: large;
+}

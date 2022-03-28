@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script defer src="/javascripts/cattoy.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -27,17 +28,17 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title"><%= cat.name%></span>
-            <p>Color:</p>
-            <p>Description:</p>
-            <p>Age:</p>
+            <p>Breed:<%= cat.breed%></p>
+            <p>Description:<%= cat.description%></p>
+            <p>Age:<%=cat.age%></p>
           </div>
-            <a href="/catCollectors/showCat/<%=cat.id%>/editCat"> Edit</a>
+          <form
+            action="/catCollectors/showCat/<%=cat.id%>?_method=DELETE"
+            method="POST"
+          >
+            <a href="/catCollectors/showCat/<%=cat.id%>/editCat" id="edit"> Edit</a>
             |
-            <form
-              action="/catCollectors/showCat/<%=cat.id%>?_method=DELETE"
-              method="POST"
-            >
-              <button type="submit">Delete</button>
+              <button id="deleteBtn" type="submit">Delete</button>
             </form>
           </div>
         </div>
@@ -47,10 +48,11 @@
        
         <div class="wrapper">
           <h3><%=cat.name%>'s Toys</h3>
-          <% cattoy.forEach(function(evt){%>
-          <h3><%=evt.name %></h3>
+       
+         <input type="text" value="there is no toy yet">
+         <h3 id="toyInput"><%cattoy.name%></h3>
         </div>
-      <%})%>
+   
         <div class="wrapper">
           <h3>Available Toys</h3>
           <% toy.forEach(function(t){%>
@@ -60,9 +62,9 @@
                 A <%=t.name%><%=t.id%>
               </span>
             </div>
-            <form action="/catCollectors/showCat/<%=cat.id%>" method="POST">
-              <input type="text" name="toyName" value="<%=t.name%>">
-              <button type="submit">Add</button>
+            <form  action="/catCollectors/showCat/<%=cat.id%>" method="POST">
+              <input id="toyName" type="text" name="toyName" value="<%=t.name%>" hidden>
+              <button id="submit" onclick="handleClick()">Add</button>
             </form>
           </div>
           <% })%>

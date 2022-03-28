@@ -10,16 +10,17 @@ async function index(req, res, next) {
   }
 }
 
-function newToy(req, res, next) {
-  res.render("toyCollectors/addToy");
+async function newToy(req, res, next) {
+  const { rows } = await db.query("SELECT * FROM toys");
+  const { id } = req.body;
+  res.render("toyCollectors/addToy", { toy: rows[0], id });
 }
 
 async function show(req, res, next) {
   try {
-    const { toysId } = req.body;
     const { id } = req.params;
     const { rows } = await db.query("SELECT * FROM toys WHERE id =$1", [id]);
-    res.render("toyCollectors/showToy", { toy: rows[0], toysId });
+    res.render("toyCollectors/showToy", { toy: rows[0] });
   } catch (err) {
     console.log(err);
     next(err);
@@ -27,11 +28,12 @@ async function show(req, res, next) {
 }
 async function create(req, res, next) {
   try {
-    const { name } = req.body;
+    const { name, color } = req.body;
     const { id } = req.params;
-    const { rows } = await db.query("INSERT INTO toys (name) VALUES ($1)", [
-      name,
-    ]);
+    const { rows } = await db.query(
+      "INSERT INTO toys (name, color) VALUES ($1,$2)",
+      [name, color]
+    );
     res.redirect(`/toyCollectors/showToy/${id}`);
   } catch (err) {
     console.log(err);

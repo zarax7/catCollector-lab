@@ -28,16 +28,19 @@ async function show(req, res, next) {
 }
 
 function newCat(req, res, next) {
-  res.render("catCollectors/addCat");
+  const { id } = req.body;
+  console.log(id);
+  res.render("catCollectors/addCat", { id });
 }
 
 async function create(req, res, next) {
   try {
-    const { name } = req.body;
+    const { name, breed, description, age } = req.body;
     const { id } = req.params;
-    const { rows } = await db.query("INSERT INTO cats (name) VALUES ($1)", [
-      name,
-    ]);
+    const { rows } = await db.query(
+      "INSERT INTO cats (name, breed, description, age ) VALUES ($1,$2,$3,$4)",
+      [name, breed, description, age]
+    );
     res.redirect(`/catCollectors/showCat/${id}`);
   } catch (err) {
     console.log(err);
@@ -58,12 +61,12 @@ async function deleteCat(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const { name } = req.body;
+    const { name, breed, description, age } = req.body;
     const { id } = req.params;
-    const { rows } = await db.query("UPDATE cats SET name = $1 WHERE id = $2", [
-      name,
-      id,
-    ]);
+    const { rows } = await db.query(
+      "UPDATE cats SET name = $1, breed=$2, description=$3, age=$4 WHERE id = $5",
+      [name, breed, description, age, id]
+    );
     res.redirect(`/catCollectors/showCat/${id}`);
   } catch (err) {
     console.log(err);

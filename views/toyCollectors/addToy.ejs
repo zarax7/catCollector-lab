@@ -29,11 +29,11 @@
     <main class="container">
       <h1>Add Toy</h1>
       <form
-        action="/toyCollectors/showToy/:id"
+        action="/toyCollectors/showToy/<%=id%>"
         method="POST"
         autocomplete="off"
       >
-        <input type="hidden" name="toysId" />
+        <input type="text" name="id" value="<%toy.id%>" hidden />
         <table>
           <tbody>
             <tr>
