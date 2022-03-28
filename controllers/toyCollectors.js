@@ -29,12 +29,12 @@ async function show(req, res, next) {
 async function create(req, res, next) {
   try {
     const { name, color } = req.body;
-    const { id } = req.params;
     const { rows } = await db.query(
-      "INSERT INTO toys (name, color) VALUES ($1,$2)",
+      "INSERT INTO toys (name, color) VALUES ($1,$2) RETURNING id",
       [name, color]
     );
-    res.redirect(`/toyCollectors/showToy/${id}`);
+
+    res.redirect(`/toyCollectors/showToy/${rows[0].id}`);
   } catch (err) {
     console.log(err);
     next(err);

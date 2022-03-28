@@ -10,7 +10,7 @@ router.get("/showCat/:id", catCtrl.show);
 
 router.post("/showCat", catCtrl.create);
 
-// router.post("/showCat", catCtrl.createToy);
+router.post("/showCat", catCtrl.createToy);
 
 router.delete("/showCat/:id", catCtrl.delete);
 

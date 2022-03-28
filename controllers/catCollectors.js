@@ -38,10 +38,10 @@ async function create(req, res, next) {
     const { name, breed, description, age } = req.body;
     const { id } = req.params;
     const { rows } = await db.query(
-      "INSERT INTO cats (name, breed, description, age ) VALUES ($1,$2,$3,$4)",
+      "INSERT INTO cats (name, breed, description, age ) VALUES ($1,$2,$3,$4) RETURNING id",
       [name, breed, description, age]
     );
-    res.redirect(`/catCollectors/showCat/${id}`);
+    res.redirect(`/catCollectors/showCat/${rows[0].id}`);
   } catch (err) {
     console.log(err);
     next(err);
@@ -84,19 +84,21 @@ async function edit(req, res, next) {
     next(err);
   }
 }
-// async function createToy(req, res, next) {
-//   try {
-//     const { toyName } = req.body;
-//     const { id } = req.params;
-//     const { rows } = await db.query("INSERT INTO cattoy (name) VALUES ($1)", [
-//       toyName,
-//     ]);
-//     res.redirect(`/catCollectors/showCat`);
-//   } catch (err) {
-//     console.log(err);
-//     next(err);
-//   }
-// }
+async function createToy(req, res, next) {
+  try {
+    const { toyName } = req.body;
+    const { id } = req.params;
+    if (toyName === " ") {
+    }
+    const { rows } = await db.query("INSERT INTO cattoy (name) VALUES ($1)", [
+      toyName,
+    ]);
+    res.redirect(`/catCollectors/showCat/${rows[0].id}`);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
 // join function to connect toys and cats table => when we add a cat or toy, both indexs will show the same content
 
 module.exports = {
@@ -107,5 +109,5 @@ module.exports = {
   delete: deleteCat,
   edit,
   update,
-  // createToy,
+  createToy,
 };
