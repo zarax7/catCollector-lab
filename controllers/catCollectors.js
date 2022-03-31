@@ -12,14 +12,21 @@ async function index(req, res, next) {
 async function show(req, res, next) {
   try {
     const { id } = req.params;
-    const { toyName } = req.body;
-    const { rows } = await db.query("SELECT * FROM cats  WHERE id =$1", [id]);
     const toys = await db.query("SELECT * FROM toys");
-    const cattoy = await db.query("SELECT * FROM cattoy");
+    const { rows } = await db.query("SELECT * FROM cats  WHERE id =$1", [id]);
+    const cattoy = await db.query("SELECT * FROM cattoy WHERE cat_id = $1", [
+      id,
+    ]);
+    const joined = await db.query(
+      "SELECT cats.name AS cat, json_agg(json_build_object('toys', toys.name) ) AS cat_toy FROM toys JOIN cattoy ON cattoy.toy_id = toys.id  JOIN cats ON cats.id = cattoy.cat_id  WHERE cat_id = $1 GROUP BY cats.id",
+      [id]
+    );
+    console.log(joined.rows[0]);
     res.render("catCollectors/showCat", {
       cat: rows[0],
       toy: toys.rows,
       cattoy: cattoy.rows,
+      join: joined.rows[0],
     });
   } catch (err) {
     console.log(err);
@@ -28,15 +35,12 @@ async function show(req, res, next) {
 }
 
 function newCat(req, res, next) {
-  const { id } = req.body;
-  console.log(id);
-  res.render("catCollectors/addCat", { id });
+  res.render("catCollectors/addCat");
 }
 
 async function create(req, res, next) {
   try {
-    const { name, breed, description, age } = req.body;
-    const { id } = req.params;
+    const { name, breed, description, age, toyName } = req.body;
     const { rows } = await db.query(
       "INSERT INTO cats (name, breed, description, age ) VALUES ($1,$2,$3,$4) RETURNING id",
       [name, breed, description, age]
@@ -51,6 +55,7 @@ async function create(req, res, next) {
 async function deleteCat(req, res, next) {
   try {
     const { id } = req.params;
+    const cattoy = await db.query("DELETE FROM cattoy WHERE cat_id = $1", [id]);
     const { rows } = await db.query("DELETE FROM cats WHERE id = $1", [id]);
     res.redirect("/catCollectors/indexCats");
   } catch (err) {
@@ -84,22 +89,6 @@ async function edit(req, res, next) {
     next(err);
   }
 }
-async function createToy(req, res, next) {
-  try {
-    const { toyName } = req.body;
-    const { id } = req.params;
-    if (toyName === " ") {
-    }
-    const { rows } = await db.query("INSERT INTO cattoy (name) VALUES ($1)", [
-      toyName,
-    ]);
-    res.redirect(`/catCollectors/showCat/${rows[0].id}`);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-}
-// join function to connect toys and cats table => when we add a cat or toy, both indexs will show the same content
 
 module.exports = {
   index,
@@ -109,5 +98,4 @@ module.exports = {
   delete: deleteCat,
   edit,
   update,
-  createToy,
 };

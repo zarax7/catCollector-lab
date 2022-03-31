@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/catCollectors", catCollectorRouter);
-app.use("/toyCollectors", toyCollectorRouter);
+app.use("/toys", toyCollectorRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -10,6 +10,8 @@ router.get("/showToy/:id", toyCtrl.show);
 
 router.post("/showToy", toyCtrl.create);
 
+router.post(`/:id/catCollectors/:id`, toyCtrl.assignToy);
+
 router.delete("/showToy/:id", toyCtrl.delete);
 
 router.get("/showToy/:id/editToy", toyCtrl.edit);

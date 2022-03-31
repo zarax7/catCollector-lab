@@ -3,7 +3,7 @@ const db = require("../config/database");
 async function index(req, res, next) {
   try {
     const { rows } = await db.query("SELECT * FROM toys");
-    res.render("toyCollectors/index", { toy: rows });
+    res.render("toys/index", { toy: rows });
   } catch (err) {
     console.log(err);
     next(err);
@@ -13,14 +13,14 @@ async function index(req, res, next) {
 async function newToy(req, res, next) {
   const { rows } = await db.query("SELECT * FROM toys");
   const { id } = req.body;
-  res.render("toyCollectors/addToy", { toy: rows[0], id });
+  res.render("toys/addToy", { toy: rows[0], id });
 }
 
 async function show(req, res, next) {
   try {
     const { id } = req.params;
     const { rows } = await db.query("SELECT * FROM toys WHERE id =$1", [id]);
-    res.render("toyCollectors/showToy", { toy: rows[0] });
+    res.render("toys/showToy", { toy: rows[0] });
   } catch (err) {
     console.log(err);
     next(err);
@@ -33,8 +33,8 @@ async function create(req, res, next) {
       "INSERT INTO toys (name, color) VALUES ($1,$2) RETURNING id",
       [name, color]
     );
-
-    res.redirect(`/toyCollectors/showToy/${rows[0].id}`);
+    console.log(rows);
+    res.redirect(`/toys/showToy/${rows[0].id}`);
   } catch (err) {
     console.log(err);
     next(err);
@@ -45,7 +45,7 @@ async function deleteToy(req, res, next) {
   try {
     const { id } = req.params;
     const { rows } = await db.query("DELETE FROM toys WHERE id = $1", [id]);
-    res.redirect("/toyCollectors/index");
+    res.redirect("/toys/index");
   } catch (err) {
     console.log(err);
     next(err);
@@ -60,7 +60,7 @@ async function update(req, res, next) {
       name,
       id,
     ]);
-    res.redirect(`/toyCollectors/showToy/${id}`);
+    res.redirect(`/toys/showToy/${id}`);
   } catch (err) {
     console.log(err);
     next(err);
@@ -71,13 +71,50 @@ async function edit(req, res, next) {
   try {
     const { id } = req.params;
     const { rows } = await db.query("SELECT * FROM toys WHERE id = $1", [id]);
-    res.render("toyCollectors/editToy", { toy: rows[0] });
+    res.render("toys/editToy", { toy: rows[0] });
   } catch (err) {
     console.log(err);
     next(err);
   }
 }
-
+async function assignToy(req, res, next) {
+  try {
+    const { toyName, toy_id } = req.body;
+    const { id } = req.params;
+    console.log(id);
+    const joined = await db.query(
+      "SELECT cats.name AS cat, json_agg(json_build_object('toys', toys.name) ) AS cat_toy FROM toys JOIN cattoy ON cattoy.toy_id = toys.id  JOIN cats ON cats.id = cattoy.cat_id GROUP BY cats.id"
+    );
+    console.log(joined.rows[0]);
+    const { rows } = await db.query(
+      " INSERT INTO cattoy (cat_id, toy_id) VALUES ($1, $2) RETURNING cat_id ",
+      [id, toy_id]
+    );
+    // const del = await db.query("DELETE FROM toys WHERE id = $1", [toy_id]);
+    res.redirect(`/catCollectors/showCat/${rows[0].cat_id}`);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+// async function viewAll(req, res, next) {
+//   try {
+//     const { id } = req.params;
+//     const toys = await db.query("SELECT * FROM toys");
+//     const { rows } = await db.query("SELECT * FROM cats  WHERE id =$1", [id]);
+//     const cattoy = await db.query("SELECT * FROM cattoy WHERE cat_id = $1", [
+//       id,
+//     ]);
+//     res.render("catCollectors/showCat", {
+//       cat: rows[0],
+//       toy: toys.rows,
+//       cattoy: cattoy.rows,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     next(err);
+//   }
+// }
 module.exports = {
   index,
   show,
@@ -86,4 +123,6 @@ module.exports = {
   delete: deleteToy,
   edit,
   update,
+  assignToy,
+  // viewAll,
 };

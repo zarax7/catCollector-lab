@@ -15,13 +15,14 @@
           <a href="/">Cat Collectors</a>
         </div>
         <div class="nav-bar">
-          <a href="/toyCollectors/addToy"> Add a toy</a>
-          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/toys/addToy"> Add a toy</a>
+          <a href="/toys/index"> View All Toys</a>
           <a href="/catCollectors/addCat"> Add a Cat</a>
           <a href="/catCollectors/indexCats">View All Cats</a>
         </div>
       </div>
     </header>
+    
     <main class="container">
       <h1>Cat Details</h1>
       <div class="row">
@@ -45,32 +46,44 @@
       </div>
       <hr>
       <div class="row_wrapper">
+      <div>
         <div class="wrapper">
           <h3><%=cat.name%>'s Toys</h3>
-          <div class="card">
-            <div class="card-content">
-         <input type="text" value="there is no toy yet">
-         <h3 id="toyInput"><%cattoy.name%></h3>
-        </div>
-        </div>
-      </div>
-        <div class="wrapper toyForm">
-          <h3>Available Toys</h3>
-          <% toy.forEach(function(t){%>
-          <div class="card">
-            <div class="card-content">
-              <span>
-                A <%=t.name%>
-              </span>
+          <% if(join === undefined){%>
+            <div class="card">
+              <div class="card-content">
+                <h3>There is no toy yet</h3>
+              </div>
             </div>
-            <form  action="/catCollectors/showCat/<%=cat.id%>" method="POST">
-              <input id="toyName" type="text" name="toyName" value="<%=t.name%>" hidden>
-              <button id="submit" onclick="handleClick()">Add</button>
-            </form>
-          </div>
-          <% })%>
-        </div>
-      </div>
+            <%} else {%>
+              <%join.cat_toy.forEach(function(e){%>
+                <div class="card full-card">
+                  <div class="card-content">
+                    <h3><%=e.toys%></h3>
+                  </div>
+                </div>
+                <%})%>
+                <%}%>
+              </div>
+            </div>
+            <div class="wrapper toyForm">
+              <h3>Available Toys</h3>
+              <% toy.forEach(function(t){%>
+                <div class="js">
+                  <div class="card ">
+                    <div class="card-content">
+                      <h4><%=t.name%></h4>
+                    </div>
+                    <form action='/toys/<%=t.id%>/catCollectors/<%=cat.id%>' method="POST">
+                      <input class="toyName" type="text" name="toyName" value="<%=t.name%>" hidden>
+                      <input type="text" name="toy_id" value="<%=t.id%>" hidden>
+                      <button class="submit">Add</button>
+                    </form>
+                  </div>
+                  <% })%>
+                </div>
+              </div>
+            </div>
     </main>
   </body>
 </html>

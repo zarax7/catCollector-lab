@@ -14,32 +14,25 @@
           <a href="/">Cat Collectors</a>
         </div>
         <div class="nav-bar">
-          <a href="/toyCollectors/addToy"> Add a toy</a>
-          <a href="/toyCollectors/index"> View All Toys</a>
+          <a href="/toys/addToy"> Add a toy</a>
+          <a href="/toys/index"> View All Toys</a>
           <a href="/catCollectors/addCat"> Add a Cat</a>
           <a href="/catCollectors/indexCats">View All Cats</a>
         </div>
       </div>
     </header>
     <main class="container">
-      <h1>Toy Details</h1>
-      <div class="row">
+      <h1>Toy List</h1>
+      <% toy.forEach(function(t){ %>
+      <a href="/toys/showToy/<%=t.id%>">
         <div class="card">
           <div class="card-content">
-            <span class="card-title"><%= toy.name%></span>
-            <p>Color:<%=toy.color%></p>
-          </div>
-          <form
-            action="/toyCollectors/showToy/<%=toy.id%>?_method=DELETE"
-            method="POST"
-          >
-            <a href="/toyCollectors/showToy/<%=toy.id%>/editToy" id="edit"> Edit</a>
-            |
-              <button id="deleteBtn" type="submit">Delete</button>
-            </form>
+            <span><%=t.name%></span>
+            <p>Color: <%=t.color%></p>
           </div>
         </div>
-      </div>
+      </a>
+      <% })%>
     </main>
   </body>
 </html>
