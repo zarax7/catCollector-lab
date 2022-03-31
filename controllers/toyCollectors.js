@@ -90,31 +90,13 @@ async function assignToy(req, res, next) {
       " INSERT INTO cattoy (cat_id, toy_id) VALUES ($1, $2) RETURNING cat_id ",
       [id, toy_id]
     );
-    // const del = await db.query("DELETE FROM toys WHERE id = $1", [toy_id]);
     res.redirect(`/catCollectors/showCat/${rows[0].cat_id}`);
   } catch (err) {
     console.log(err);
     next(err);
   }
 }
-// async function viewAll(req, res, next) {
-//   try {
-//     const { id } = req.params;
-//     const toys = await db.query("SELECT * FROM toys");
-//     const { rows } = await db.query("SELECT * FROM cats  WHERE id =$1", [id]);
-//     const cattoy = await db.query("SELECT * FROM cattoy WHERE cat_id = $1", [
-//       id,
-//     ]);
-//     res.render("catCollectors/showCat", {
-//       cat: rows[0],
-//       toy: toys.rows,
-//       cattoy: cattoy.rows,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     next(err);
-//   }
-// }
+
 module.exports = {
   index,
   show,
@@ -124,5 +106,4 @@ module.exports = {
   edit,
   update,
   assignToy,
-  // viewAll,
 };
