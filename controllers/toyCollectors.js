@@ -81,11 +81,9 @@ async function assignToy(req, res, next) {
   try {
     const { toyName, toy_id } = req.body;
     const { id } = req.params;
-    console.log(id);
     const joined = await db.query(
       "SELECT cats.name AS cat, json_agg(json_build_object('toys', toys.name) ) AS cat_toy FROM toys JOIN cattoy ON cattoy.toy_id = toys.id  JOIN cats ON cats.id = cattoy.cat_id GROUP BY cats.id"
     );
-    console.log(joined.rows[0]);
     const { rows } = await db.query(
       " INSERT INTO cattoy (cat_id, toy_id) VALUES ($1, $2) RETURNING cat_id ",
       [id, toy_id]

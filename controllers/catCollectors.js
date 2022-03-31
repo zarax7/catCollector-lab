@@ -21,7 +21,6 @@ async function show(req, res, next) {
       "SELECT cats.name AS cat, json_agg(json_build_object('toys', toys.name) ) AS cat_toy FROM toys JOIN cattoy ON cattoy.toy_id = toys.id  JOIN cats ON cats.id = cattoy.cat_id  WHERE cat_id = $1 GROUP BY cats.id",
       [id]
     );
-    console.log(joined.rows[0]);
     res.render("catCollectors/showCat", {
       cat: rows[0],
       toy: toys.rows,
